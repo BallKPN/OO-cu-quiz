@@ -4,7 +4,7 @@ const router = require("express").Router();
 const userController = require("../controllers/User");
 const jwtValidate = require("../middleware/jwtValidate");
 
-router.get("/", userController.getUsers); //ไว้เช็ค User เฉยๆ
+router.get("/", userController.getUsers); //ไว้เช็ค User ที่มีเฉยๆ
 router.get("/:user_id", jwtValidate, userController.getUser);
 
 router.post(

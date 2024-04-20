@@ -54,8 +54,8 @@ exports.signup = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const repassword = req.body.repassword;
-  const firstname = req.body.firstname;
-  const lastname = req.body.lastname;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
   await Users.findOne({ username })
     .then((userDoc) => {
       if (userDoc) {
@@ -63,16 +63,13 @@ exports.signup = async (req, res) => {
       }
       if (password === repassword) {
         return bcrypt.hash(password, 12).then((hashedPassword) => {
+          const name = { firstName, lastName };
           const user = new User({
             username,
             password: hashedPassword,
-            name: {
-              firstName: firstname,
-              lastName: lastname,
-            },
+            name,
           });
           user.save();
-          const name = { firstName: firstname, lastName: lastname };
           const access_token = jwtGenerate(username, name);
           return res.json({ access_token });
         });

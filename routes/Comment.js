@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const commentController = require("../controllers/Comment");
+const jwtValidate = require("../middleware/jwt");
 
-router.post("/add", commentController.addComment);
+router.post("/", jwtValidate, commentController.createComment);
 
-router.put("/update/:commentController_id", commentController.updateComment);
+router.put("/:commentController_id", jwtValidate, commentController.updateComment);
 
-router.delete("/delete/:commentController_id", commentController.deleteComment);
+router.delete("/:commentController_id", jwtValidate, commentController.deleteComment);
 
 module.exports = router;

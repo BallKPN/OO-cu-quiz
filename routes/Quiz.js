@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const quizController = require("../controllers/Quiz");
+const jwtValidate = require("../middleware/jwt");
 
-router.post("/add", quizController.addQuiz);
+router.post("/", jwtValidate, quizController.createQuiz);
 
-router.put("/update/:quiz_id", quizController.updateQuiz);
+router.put("/:quiz_id", jwtValidate, quizController.updateQuiz);
 
-router.delete("/delete/:quiz_id", quizController.deleteQuiz);
+router.delete("/:quiz_id", jwtValidate, quizController.deleteQuiz);
 
 module.exports = router;

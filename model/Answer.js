@@ -18,6 +18,7 @@ const answerSchema = new mongoose.Schema({
   },
   answer: { type: String, required: true },
   submitDate: { type: Date, default: Date.now },
+  score: { type: Number, default: 0 },
   comment: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 });
 

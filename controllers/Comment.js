@@ -4,7 +4,7 @@ const User = require("../model/User");
 exports.createComment = async (req, res) => {
   try {
     const { comment } = req.body;
-    const commenter = req.user.username;
+    const commenter = req.user.name;
     const newComment = new Comment({
       comment,
       commenter,
@@ -26,9 +26,9 @@ exports.createComment = async (req, res) => {
 
 exports.updateComment = async (req, res) => {
   try {
-    const id = req.params.comment_id;
+    const _id = req.params.comment_id;
     const { comment } = req.body;
-    await Comment.updateOne({ id }, { comment }).exec();
+    await Comment.updateOne({ _id }, { comment }).exec();
     res.json({
       msg: "อัพเดทความคิดเห็นสำเร็จ",
     });
@@ -45,8 +45,8 @@ exports.updateComment = async (req, res) => {
 
 exports.deleteComment = async (req, res) => {
   try {
-    const id = req.params.comment_id;
-    await Comment.deleteOne({ id }).exec();
+    const _id = req.params.comment_id;
+    await Comment.deleteOne({ _id }).exec();
     res.json({
       msg: "ลบความคิดเห็นสำเร็จ",
     });
