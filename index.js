@@ -4,6 +4,9 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+
 if (process.env.NODE_ENV !== "production") {
     console.log("development");
     require("dotenv").config();
@@ -13,7 +16,6 @@ mongoose.connect(process.env.MONGO_URL);
 
 //cors
 app.use(express.json());
-connectdb();
 app.use(cors());
 app.use(
   cors({
@@ -21,6 +23,9 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(helmet());
+app.use(mongoSanitize());
 
 //Routes
 app.use("/user", require("./routes/User"));

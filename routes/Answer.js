@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const answerController = require("../controllers/Answer");
-const jwtValidate = require("../middleware/jwt");
+const { jwtValidate } = require("../middleware/jwt");
 
 //อันบนคือถ้ากดข้อนึงแล้วบันทึกข้อมูลเก็บไว้ หรือ ถ้าจะทำแบบส่งทุกข้อพร้อมกันใช้อันล่าง
 router.post("/", jwtValidate, answerController.createAnswer);

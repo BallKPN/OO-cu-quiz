@@ -1,9 +1,9 @@
 const { validationResult } = require("express-validator");
 
-const { User } = require("../model/User");
+const User = require("../model/User");
 
 const bcrypt = require("bcrypt");
-const jwtGenerate = require("../middleware/jwt");
+const { jwtGenerate } = require("../middleware/jwt");
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
@@ -56,7 +56,7 @@ exports.signup = async (req, res) => {
   const repassword = req.body.repassword;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
-  await Users.findOne({ username })
+  await User.findOne({ username })
     .then((userDoc) => {
       if (userDoc) {
         return res.json("มีชื่อผู้ใช้นี้แล้ว");

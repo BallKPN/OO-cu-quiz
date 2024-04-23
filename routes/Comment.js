@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const commentController = require("../controllers/Comment");
-const jwtValidate = require("../middleware/jwt");
+const { jwtValidate } = require("../middleware/jwt");
 
 router.post("/", jwtValidate, commentController.createComment);
 

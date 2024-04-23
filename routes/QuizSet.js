@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const quizSetController = require("../controllers/QuizSet");
-const jwtValidate = require("../middleware/jwt");
+const { jwtValidate } = require("../middleware/jwt");
 
 router.post("/", jwtValidate, quizSetController.createQuizSet);
 
