@@ -16,9 +16,11 @@ exports.login = async (req, res) => {
     });
   }
 
+  let user = null;
+
   //Check username & password
   try {
-    const user = await User.findOne({ username }).exec();
+    user = await User.findOne({ username }).exec();
     const isMatch = await bcrypt.compare(password, user.password);
     if (user === null || !isMatch) {
       return res.status(400).json({
@@ -29,6 +31,7 @@ exports.login = async (req, res) => {
         ],
       });
     }
+
   } catch (error) {
     return res.status(400).json({
       errors: [
