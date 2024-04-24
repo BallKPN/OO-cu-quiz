@@ -5,6 +5,7 @@ const quizSetSchema = new mongoose.Schema({
   createdBy: { type: String, required: true },
   createdDate: { type: Date, default: Date.now },
   endDate: Date,
+  timer: Number,
   quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Quiz" }],
   answerSet: [{ type: mongoose.Schema.Types.ObjectId, ref: "Answer" }],
 });

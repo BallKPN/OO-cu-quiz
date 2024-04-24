@@ -2,13 +2,14 @@ const QuizSet = require("../model/QuizSet");
 
 exports.createQuizSet = async (req, res) => {
   try {
-    const { title, endDate, quizzes } = req.body;
+    const { title, endDate, quizzes, timer } = req.body;
     const createdBy = req.user.username;
     const newQuizSet = new QuizSet({
       title,
       createdBy,
       endDate,
       quizzes,
+      timer,
     });
     await newQuizSet.save();
     res.json({
