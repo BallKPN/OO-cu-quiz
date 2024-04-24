@@ -1,14 +1,19 @@
 const QuizSet = require("../model/QuizSet");
+const { createQuizs } = require("./Quiz");
 
 exports.createQuizSet = async (req, res) => {
   try {
     const { title, endDate, quizzes, timer } = req.body;
     const createdBy = req.user.username;
+
+    //Create quizzes
+    const quizIds = await createQuizs(quizzes);
+
     const newQuizSet = new QuizSet({
       title,
       createdBy,
       endDate,
-      quizzes,
+      quizzes: quizIds,
       timer,
     });
     await newQuizSet.save();
@@ -34,8 +39,7 @@ exports.updateQuizSet = async (req, res) => {
     res.json({
       msg: "อัพเดทชุดคำถามสำเร็จ",
     });
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({
       errors: [
         {
@@ -68,8 +72,7 @@ exports.getQuizSets = async (req, res) => {
   try {
     const quizSets = await QuizSet.find({}).exec();
     res.json(quizSets);
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({
       errors: [
         {
@@ -85,8 +88,7 @@ exports.getQuizSet = async (req, res) => {
     const _id = req.params.quizSet_id;
     const quizSet = await QuizSet.findOne({ _id }).populate("quizzes").exec();
     res.json(quizSet);
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({
       errors: [
         {
@@ -102,8 +104,7 @@ exports.getOwnQuizSets = async (req, res) => {
     const createdBy = req.user.username;
     const quizSets = await QuizSet.find({ createdBy }).exec();
     res.json(quizSets);
-  }
-  catch (error) {
+  } catch (error) {
     res.status(500).json({
       errors: [
         {

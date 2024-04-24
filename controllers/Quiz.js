@@ -60,3 +60,20 @@ exports.deleteQuiz = async (req, res) => {
     });
   }
 };
+
+exports.createQuizs = (quizzes) => {
+  let quizzes_id = [];
+
+  quizzes.forEach((quiz) => {
+    const newQuiz = new Quiz({
+      title: quiz.title,
+      choices: quiz.choices,
+      textAnswer: quiz.textAnswer,
+      score: quiz.score,
+    });
+    newQuiz.save();
+    quizzes_id.push(newQuiz._id);
+  });
+
+  return quizzes_id;
+};
