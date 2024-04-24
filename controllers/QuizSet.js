@@ -3,7 +3,7 @@ const { createQuizs } = require("./Quiz");
 
 exports.createQuizSet = async (req, res) => {
   try {
-    const { title, endDate, quizzes, timer } = req.body;
+    const { title, description, endDate, quizzes } = req.body;
     const createdBy = req.user.username;
 
     //Create quizzes
@@ -14,7 +14,7 @@ exports.createQuizSet = async (req, res) => {
       createdBy,
       endDate,
       quizzes: quizIds,
-      timer,
+      description,
     });
     await newQuizSet.save();
     res.json({
@@ -34,8 +34,8 @@ exports.createQuizSet = async (req, res) => {
 exports.updateQuizSet = async (req, res) => {
   try {
     const _id = req.params.quizSet_id;
-    const { title, endDate, quizzes } = req.body;
-    await QuizSet.updateOne({ _id }, { title, endDate, quizzes }).exec();
+    const { title, description, endDate, quizzes } = req.body;
+    await QuizSet.updateOne({ _id }, { title, description, endDate, quizzes }).exec();
     res.json({
       msg: "อัพเดทชุดคำถามสำเร็จ",
     });
