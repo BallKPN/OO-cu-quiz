@@ -11,5 +11,6 @@ router.delete("/:quizSet_id", jwtValidate, quizSetController.deleteQuizSet);
 router.get("/", quizSetController.getQuizSets); //ดึง QuizSet ทั้งหมด
 router.get("/id/:quizSet_id", jwtValidate, quizSetController.getQuizSet); //ดึง QuizSet ตาม ID && ใช้ตอนกดเข้าทำแบบทดสอบ
 router.get("/user", jwtValidate, quizSetController.getOwnQuizSets); //ดึง QuizSet ที่ User สร้าง
+router.get("/scored", jwtValidate, quizSetController.getSubmittedQuizSets); //ดึง QuizSet ที่ User ทำแล้ว
 
 module.exports = router;

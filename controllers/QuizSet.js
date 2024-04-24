@@ -1,4 +1,6 @@
 const QuizSet = require("../model/QuizSet");
+const User = require("../model/User");
+const Answer = require("../model/Answer");
 const { createQuizs } = require("./Quiz");
 
 exports.createQuizSet = async (req, res) => {
@@ -35,7 +37,10 @@ exports.updateQuizSet = async (req, res) => {
   try {
     const _id = req.params.quizSet_id;
     const { title, description, endDate, quizzes } = req.body;
-    await QuizSet.updateOne({ _id }, { title, description, endDate, quizzes }).exec();
+    await QuizSet.updateOne(
+      { _id },
+      { title, description, endDate, quizzes }
+    ).exec();
     res.json({
       msg: "อัพเดทชุดคำถามสำเร็จ",
     });
@@ -105,6 +110,27 @@ exports.getOwnQuizSets = async (req, res) => {
     const quizSets = await QuizSet.find({ createdBy }).exec();
     res.json(quizSets);
   } catch (error) {
+    res.status(500).json({
+      errors: [
+        {
+          msg: "เกิดข้อผิดพลาดในการดึงข้อมูลชุดคำถาม",
+        },
+      ],
+    });
+  }
+};
+
+exports.getSubmittedQuizSets = async (req, res) => {
+  try {
+    const username = req.user.username;
+    const user_id = await User.findOne({ username }).exec();
+    const answerer = user_id._id;
+
+    const quizSets = await Answer.find({ answerer }).populate("quizSet").exec();
+
+    res.json(quizSets.map((answer) => answer.quizSet));
+  } catch (error) {
+    console.log(error);
     res.status(500).json({
       errors: [
         {

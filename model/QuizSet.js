@@ -7,7 +7,7 @@ const quizSetSchema = new mongoose.Schema({
   createdDate: { type: Date, default: Date.now },
   endDate: Date,
   quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Quiz" }],
-  answerSet: [{ type: mongoose.Schema.Types.ObjectId, ref: "Answer" }],
+  // answerSet: [{ type: mongoose.Schema.Types.ObjectId, ref: "Answer" }],
 });
 
 const QuizSet = mongoose.model("QuizSet", quizSetSchema);
